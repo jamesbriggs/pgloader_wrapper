@@ -50,7 +50,7 @@ function cleanup {
    echo "`date` $0 error: a step failed, so dropping $db and exiting"
    exit 1
 }
-trap cleanup EXIT
+trap cleanup INT TERM EXIT
 
 $sudo echo "`date` $0 start" >>$0.log
 
@@ -96,4 +96,4 @@ $sudo $flush_cache
 
 $sudo echo "`date` $0 end" >>$0.log
 
-trap "" EXIT
+trap - INT TERM EXIT

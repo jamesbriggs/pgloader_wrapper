@@ -4,7 +4,7 @@ Wrapper or driver script to script pgloader for instant or iterative database mi
 Introduction
 -----
 
-pgloader_wrapper is a set of script files for a database engineer or DBA to migrate a MySQL database to Postgresql quickly and frequently using [https://pgloader.io/|pgloader]:
+pgloader_wrapper is a set of script files for a database engineer or DBA to migrate a MySQL database to Postgresql quickly and frequently using [https://pgloader.io/](pgloader):
 
 1. pgloader_wrapper.sh
 1. grants.sql

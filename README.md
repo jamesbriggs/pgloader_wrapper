@@ -6,19 +6,19 @@ Introduction
 
 pgloader_wrapper is a set of script files for a database engineer or DBA to migrate a MySQL database to Postgresql quickly and frequently using pgloader:
 
-# pgloader_wrapper.sh
-# grants.sql
-# pgloader.load
+1. pgloader_wrapper.sh
+1. grants.sql
+1. pgloader.load
 
 Getting Started
 -----
 
-# install pgloader
-# configure the settings in pgloader_wrapper.sh as documented near the top of file
-# grants.sql has typical Postgresql grants for a web app. Customize as necessary.
-# pgloader.load illustrates advanced settings for migrating a MySQL database to Postgresql 9.2+. Customize as necessary.
-# run: ./pgloader_wrapper.sh
-# look at the logfile in pgloader_wrapper.sh.log
+1. install pgloader
+1. configure the settings in pgloader_wrapper.sh as documented near the top of file
+1. grants.sql has typical Postgresql grants for a web app. Customize as necessary.
+1. pgloader.load illustrates advanced settings for migrating a MySQL database to Postgresql 9.2+. Customize as necessary.
+1. run: ./pgloader_wrapper.sh
+1. look at the logfile in pgloader_wrapper.sh.log
 
 FAQ
 -----

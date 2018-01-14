@@ -11,7 +11,7 @@
 set search_path to :db;
 
 drop user if exists :"db";
-create user :"db" with password ':"pw"';
+create user :"db" with password :'pw';
 alter role :"db" set search_path TO :"db";
 
 grant usage on schema :"db" to :"db";

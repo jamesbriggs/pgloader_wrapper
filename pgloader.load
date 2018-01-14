@@ -1,0 +1,49 @@
+-- for pgloader version 3.x
+
+-- this is a non-trivial, actual script used to migrate a mysql 5.5 schema and data to postgres 9.5. Only the database name has been changed.
+
+LOAD DATABASE
+    FROM mysql://root@localhost/mydb
+    -- FROM mysql://root@unix:/tmp/mysql.sock:3306/mydb
+    INTO postgresql:///mydb
+  
+WITH include drop, create tables, no truncate,
+     create indexes, reset sequences, foreign keys,
+     concurrency = 2,
+     multiple readers per thread,
+     rows per range = 50000
+     -- quote identifiers
+
+SET maintenance_work_mem to '128MB', work_mem to '12MB', search_path to 'mydb'
+
+-- SET timezone to 'PST8PDT'
+SET timezone to 'UTC'
+  
+-- see http://pgloader.readthedocs.io/en/latest/ref/transforms.html
+   -- legend           | character varying(6)        | not null default ''::character varying
+   -- mx               | character varying(1)        | default 'N'::character varying
+
+CAST type datetime  to timestamp drop default drop not null using zero-dates-to-null,
+     type timestamp to timestamp drop default drop not null using zero-dates-to-null,
+     type tinyint   to smallint  drop typemod,
+     type char      to varchar
+
+-- MATERIALIZE VIEWS film_list, staff_list
+
+-- INCLUDING ONLY TABLE NAMES MATCHING ~/film/, 'actor'
+EXCLUDING TABLE NAMES MATCHING ~/gone_/
+
+BEFORE LOAD DO
+   $$ create schema mydb; $$
+
+AFTER LOAD DO
+   $$ truncate table sessions;     $$,
+   $$ truncate table agg_downtime; $$,
+   $$ delete from sessionlog where time_stamp < now() - interval '1 week';                                            $$,
+   $$ alter table sessions       alter a_session type bytea using a_session::bytea;                                   $$,
+   -- add named constraint object names for Postgresql 9.5 UPSERTs (ON CONFLICT ON CONSTRAINT cx_name ...)
+   $$ alter table agg_downtime   add constraint cx_agg_downtime_amp    unique (account_id, monitor_id, pending);      $$,
+   $$ alter table agg_event_days add constraint cx_agg_event_days_ampd unique (account_id, monitor_id, probe_id, dt); $$,
+   $$ alter table bill           add constraint cx_bill_ap             unique (account_id, phase);                    $$,
+   $$ alter table ip_track       add constraint cx_ip_track_ami        unique (account_id, monitor_id, ip_id);        $$;
+

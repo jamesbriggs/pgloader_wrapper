@@ -1,5 +1,5 @@
 # pgloader_wrapper
-Wrapper or driver script to script pgloader for instant or iterative database migrations.
+Wrapper or driver script to automate the pgloader ETL utility for instant or iterative database migrations.
 
 Introduction
 -----

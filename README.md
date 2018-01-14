@@ -23,6 +23,6 @@ FAQ
 I'm familiar with MySQL but not Postgresql. What do I need to know?
 
 - In MySQL, database and schema are the same thing (a directory on disk.) In Postgresql, a database is a container for multiple objects like schemas and roles.
-- In Postgresql a user is the same thing as a role (aside from default differences in inheritance.)
+- In Postgresql, a user is the same thing as a role (aside from minor differences in inheritance.)
 - In MySQL, a unique index is a unique constraint. In Postgresql, a unique constraint's underlying mechanism is a unique index, but they are considered different. UPSERTs require constraints.
 
